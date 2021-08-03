@@ -1,0 +1,1 @@
+print("o pai ta on")
