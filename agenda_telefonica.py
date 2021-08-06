@@ -1,23 +1,31 @@
 from random import randrange
+def salvar_contatos(lista):
+    arquivo = open("contatos.txt","w")
+    for contato in lista:
+        arquivo.write("{}#{}#{}#{}#{}\n".format(contato['nome'],contato['telefone'],contato['email'],contato['facebook'],contato['twitter'],))
+    arquivo.close()
+
+def existe_contato(nome,lista):
 
 
-def existe_contato(email,lista):
     if len(lista) >0:
         for contato in lista:
-            if contato["email"] == email:
+            if contato["nome"] == nome:
                 return True
             else:
                 return False
 def adicionar(lista):
     while True:
-        email = input("Digite o e-mail do contato: ")
-        if not existe_contato(email,lista):
+
+        nome = input("Digite o nome do contato:")
+        if not existe_contato(nome, lista):
             break
         else:
             print("Esse email ja foi utilizado,por favor tente novamente")
     contato = {
-        "email": email,
-        "nome": input("Digite o nome do contato:"),
+        "nome": nome,
+        "telefone": input("Digite o numero de telefone do contato: "),
+        "email": input("Digite o e-mail do contato: "),
         "facebook": input("Digite o usuario de Facebook do contato:"),
         "twitter": input("Digite o o usuario de Twitter do contato:")
     }
@@ -38,6 +46,7 @@ def listar(lista):
         for i, contato in enumerate(lista):
             print("Contato {}".format(i+1))
             print("\tNome:{}",format(contato["nome"]))
+            print("\tTelefone:{}", format(contato["telefone"]))
             print("\tEmail:{}", format(contato["email"]))
             print("\tFacebook:{}",format(contato["facebook"]))
             print("\tTwitter:{}", format(contato["twitter"]))
@@ -56,10 +65,13 @@ def principal():
         opcao = int(input("> "))
         if opcao == 1:
             adicionar(lista)
+            salvar_contatos(lista)
         elif opcao == 2:
             alterar()
+            salvar_contatos(lista)
         elif opcao == 3:
             excluir()
+            salvar_contatos(lista)
         elif opcao == 4:
             buscar()
         elif opcao == 5:
