@@ -6,7 +6,8 @@ def existe_contato(email,lista):
         for contato in lista:
             if contato["email"] == email:
                 return True
-    return False
+            else:
+                return False
 def adicionar(lista):
     while True:
         email = input("Digite o e-mail do contato: ")
@@ -15,7 +16,6 @@ def adicionar(lista):
         else:
             print("Esse email ja foi utilizado,por favor tente novamente")
     contato = {
-        "id":str(randrange(1000)),
         "email": email,
         "nome": input("Digite o nome do contato:"),
         "facebook": input("Digite o usuario de Facebook do contato:"),
@@ -33,9 +33,16 @@ def excluir():
 def buscar():
     pass
 
-def listar():
-    pass
-
+def listar(lista):
+    if len(lista)> 0:
+        for i, contato in enumerate(lista):
+            print("Contato {}".format(i+1))
+            print("\tNome:{}",format(contato["nome"]))
+            print("\tEmail:{}", format(contato["email"]))
+            print("\tFacebook:{}",format(contato["facebook"]))
+            print("\tTwitter:{}", format(contato["twitter"]))
+    else:
+        print("Nao existe nenhum contrato cadastrado no sistema")
 def principal():
     lista = []
     while True:
@@ -56,7 +63,7 @@ def principal():
         elif opcao == 4:
             buscar()
         elif opcao == 5:
-            listar()
+            listar(lista)
         elif opcao == 6:
             print("Saindo da agenda")
             break
