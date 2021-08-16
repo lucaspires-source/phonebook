@@ -24,20 +24,17 @@ def carregar_contatos():
     except FileNotFoundError:
         pass
     return  lista
-def existe_contato(nome,lista):
+def existe_contato(lista,nome):
+    for contato in lista:
+        if contato["nome"] == nome:
+            return True
+    return False
 
-
-    if len(lista) >0:
-        for contato in lista:
-            if contato["nome"] == nome:
-                return True
-            else:
-                return False
 def adicionar(lista):
     while True:
 
         nome = input("Digite o nome do contato:")
-        if not existe_contato(nome, lista):
+        if not existe_contato(lista,nome):
             break
         else:
             print("Esse email ja foi utilizado,por favor tente novamente")
@@ -51,13 +48,34 @@ def adicionar(lista):
 
     lista.append((contato))
     print("o contato foi cadastrato com sucesso\n".format(contato["nome"]))
-def  alterar():
-    pass
+def  alterar(lista):
+    if len(lista)> 0:
+        nome = input("Digite o nome do contato a ser alterado:")
+        if existe_contato(lista,nome):
+            print("O Contato foi encontrado veja abaixo:")
+            for contato in lista:
+                if contato['nome'] == nome:
+                    print("\tNome:",format(contato["nome"]))
+                    print("\tTelefone:", format(contato["telefone"]))
+                    print("\tEmail:", format(contato["email"]))
+                    print("\tFacebook:",format(contato["facebook"]))
+                    print("\tTwitter:", format(contato["twitter"]))
+
+                    contato['nome']= input("digite o novo nome do contato")
+                    contato['telefone'] = input("digite o novo numero de telefone do contato")
+                    contato['email'] = input("digite o novo email do contato")
+                    contato['facebook'] = input("digite o novo facebook do contato")
+                    contato['twitter'] = input("digite o novo twitter do contato")
+                    break
+        else:
+            print("Não existe contato cadastrado no sistema com o nome {}".format(nome))
+    else:
+        print("Nao existe nenhum contrato cadastrado no sistema")
 
 def excluir(lista):
     if len(lista) > 0:
         nome = input("Digite o nome do contato a ser excluido:")
-        if existe_contato(nome, lista):
+        if existe_contato(lista,nome):
             print("O contato abaixo foi encontrado e excluido com sucesso")
             for i, contato in enumerate(lista):
                 if contato['nome'] == nome:
@@ -68,6 +86,7 @@ def excluir(lista):
                     print("\tTwitter:", format(contato["twitter"]))
 
                     del lista[i]
+                    break
         else:
             print("Não existe contato cadastrado no sistema com o nome {}".format(nome))
     else:
@@ -76,7 +95,7 @@ def excluir(lista):
 def buscar(lista):
     if len(lista)> 0:
         nome = input("Digite o nome do contato a ser encontratado:")
-        if existe_contato(nome,lista):
+        if existe_contato(lista,nome):
             print("O Contato foi encontrado veja abaixo:")
             for contato in lista:
                 if contato['nome'] == nome:
@@ -85,6 +104,7 @@ def buscar(lista):
                     print("\tEmail:", format(contato["email"]))
                     print("\tFacebook:",format(contato["facebook"]))
                     print("\tTwitter:", format(contato["twitter"]))
+                    break
         else:
             print("Não existe contato cadastrado no sistema com o nome {}".format(nome))
     else:
@@ -116,7 +136,7 @@ def principal():
             adicionar(lista)
             salvar_contatos(lista)
         elif opcao == 2:
-            alterar()
+            alterar(lista)
             salvar_contatos(lista)
         elif opcao == 3:
             excluir(lista)
