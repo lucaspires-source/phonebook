@@ -1,10 +1,29 @@
-from random import randrange
+
 def salvar_contatos(lista):
     arquivo = open("contatos.txt","w")
     for contato in lista:
-        arquivo.write("{}#{}#{}#{}#{}\n".format(contato['nome'],contato['telefone'],contato['email'],contato['facebook'],contato['twitter'],))
+        arquivo.write("{},{},{},{},{}\n".format(contato['nome'],contato['telefone'],contato['email'],contato['facebook'],contato['twitter'],))
     arquivo.close()
 
+def carregar_contatos():
+    lista =[]
+
+    try:
+        arquivo = open("contatos.txt","r")
+        for linha in arquivo.readlines():
+            coluna = linha.strip().split(",")
+            contato = {
+                "nome":coluna[0],
+                "telefone":coluna[1],
+                "email":coluna[2],
+                "facebook":coluna[3],
+                "twitter":coluna[4],
+            }
+            lista.append(contato)
+        arquivo.close()
+    except FileNotFoundError:
+        pass
+    return  lista
 def existe_contato(nome,lista):
 
 
@@ -44,16 +63,16 @@ def buscar():
 def listar(lista):
     if len(lista)> 0:
         for i, contato in enumerate(lista):
-            print("Contato {}".format(i+1))
-            print("\tNome:{}",format(contato["nome"]))
-            print("\tTelefone:{}", format(contato["telefone"]))
-            print("\tEmail:{}", format(contato["email"]))
-            print("\tFacebook:{}",format(contato["facebook"]))
-            print("\tTwitter:{}", format(contato["twitter"]))
+            print("Contato".format(i+1))
+            print("\tNome:",format(contato["nome"]))
+            print("\tTelefone:", format(contato["telefone"]))
+            print("\tEmail:", format(contato["email"]))
+            print("\tFacebook:",format(contato["facebook"]))
+            print("\tTwitter:", format(contato["twitter"]))
     else:
         print("Nao existe nenhum contrato cadastrado no sistema")
 def principal():
-    lista = []
+    lista = carregar_contatos()
     while True:
         print("=== Bem vindo a sua Agenda de contatos===")
         print("1 - Adicionar Contato")
