@@ -54,13 +54,30 @@ def adicionar(lista):
 def  alterar():
     pass
 
-def excluir():
-    pass
+def excluir(lista):
+    if len(lista) > 0:
+        nome = input("Digite o nome do contato a ser excluido:")
+        if existe_contato(nome, lista):
+            print("O contato abaixo foi encontrado e excluido com sucesso")
+            for i, contato in enumerate(lista):
+                if contato['nome'] == nome:
+                    print("\tNome:", format(contato["nome"]))
+                    print("\tTelefone:", format(contato["telefone"]))
+                    print("\tEmail:", format(contato["email"]))
+                    print("\tFacebook:", format(contato["facebook"]))
+                    print("\tTwitter:", format(contato["twitter"]))
+
+                    del lista[i]
+        else:
+            print("Não existe contato cadastrado no sistema com o nome {}".format(nome))
+    else:
+        print("Nao existe nenhum contrato cadastrado no sistema")
 
 def buscar(lista):
     if len(lista)> 0:
         nome = input("Digite o nome do contato a ser encontratado:")
         if existe_contato(nome,lista):
+            print("O Contato foi encontrado veja abaixo:")
             for contato in lista:
                 if contato['nome'] == nome:
                     print("\tNome:",format(contato["nome"]))
@@ -102,7 +119,7 @@ def principal():
             alterar()
             salvar_contatos(lista)
         elif opcao == 3:
-            excluir()
+            excluir(lista)
             salvar_contatos(lista)
         elif opcao == 4:
             buscar(lista)
