@@ -57,8 +57,21 @@ def  alterar():
 def excluir():
     pass
 
-def buscar():
-    pass
+def buscar(lista):
+    if len(lista)> 0:
+        nome = input("Digite o nome do contato a ser encontratado:")
+        if existe_contato(nome,lista):
+            for contato in lista:
+                if contato['nome'] == nome:
+                    print("\tNome:",format(contato["nome"]))
+                    print("\tTelefone:", format(contato["telefone"]))
+                    print("\tEmail:", format(contato["email"]))
+                    print("\tFacebook:",format(contato["facebook"]))
+                    print("\tTwitter:", format(contato["twitter"]))
+        else:
+            print("Não existe contato cadastrado no sistema com o nome {}".format(nome))
+    else:
+        print("Nao existe nenhum contrato cadastrado no sistema")
 
 def listar(lista):
     if len(lista)> 0:
@@ -92,7 +105,7 @@ def principal():
             excluir()
             salvar_contatos(lista)
         elif opcao == 4:
-            buscar()
+            buscar(lista)
         elif opcao == 5:
             listar(lista)
         elif opcao == 6:
